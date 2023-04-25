@@ -1,3 +1,14 @@
+public async Task<List<string>> GetAttributeNamesAsync()
+{
+    List<UserPermission> userPermissions = await PostPermissionedDataAsync<UserPermission>();
+
+    // Extract the AttributeName property values and return them as a list
+    List<string> attributeNames = userPermissions.Select(up => up.AttributeName).ToList();
+    return attributeNames;
+}
+
+
+
 public async Task<List<T>> PostPermissionedDataAsync<T>()
 {
     // ...
