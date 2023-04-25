@@ -1,3 +1,21 @@
+public async Task<List<T>> PostPermissionedDataAsync<T>()
+{
+    // ...
+    List<UserPermission> userPermissions;
+    string json;
+
+    try
+    {
+        // ...
+        userPermissions = JsonConvert.DeserializeObject<List<UserPermission>>(json) ?? new List<UserPermission>();
+    }
+    // ...
+
+    return userPermissions as List<T>;
+}
+
+
+
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
