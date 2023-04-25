@@ -1,3 +1,129 @@
+To host an Angular 14 application and a .NET 7 Web API on a Red Hat Enterprise Linux (RHEL) server using Nginx, follow these steps:
+
+Step 1: Install .NET 7 SDK and Runtime
+1. Register the Microsoft repository and install required dependencies by running the following commands:
+   ```
+   sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm
+   sudo yum update
+   ```
+2. Install the .NET 7 SDK and Runtime:
+   ```
+   sudo yum install dotnet-sdk-7.0
+   sudo yum install aspnetcore-runtime-7.0
+   ```
+
+Step 2: Install Node.js and Angular CLI
+1. Install Node.js from the NodeSource repository:
+   ```
+   curl -sL https://rpm.nodesource.com/setup_16.x | sudo bash -
+   sudo yum install nodejs
+   ```
+2. Install Angular CLI globally:
+   ```
+   sudo npm install -g @angular/cli
+   ```
+
+Step 3: Publish Angular 14 and .NET 7 Web API projects
+1. Publish your Angular 14 application:
+   - Open the terminal and navigate to the Angular project directory.
+   - Run `ng build --prod` to create a production build in the "dist" folder.
+2. Publish your .NET 7 Web API application:
+   - Open the terminal and navigate to the Web API project directory.
+   - Run `dotnet publish --configuration Release --output ./publish` to create a release build in the "publish" folder.
+
+Step 4: Install and configure Nginx
+1. Install Nginx:
+   ```
+   sudo yum install epel-release
+   sudo yum install nginx
+   ```
+2. Create a new Nginx configuration file for your application, e.g., `/etc/nginx/conf.d/yourapp.conf` and add the following configuration:
+   ```
+   server {
+       listen 80;
+       server_name yourdomain.com;
+   
+       location / {
+           root /path/to/angular/dist/folder;
+           try_files $uri $uri/ /index.html;
+       }
+   
+       location /api {
+           proxy_pass http://localhost:5000;
+           proxy_http_version 1.1;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection keep-alive;
+           proxy_set_header Host $host;
+           proxy_cache_bypass $http_upgrade;
+       }
+   }
+   ```
+   Replace "yourdomain.com" with your domain and update the paths to the Angular "dist" folder and Web API "publish" folder accordingly.
+
+3. Remove the default Nginx configuration:
+   ```
+   sudo rm /etc/nginx/conf.d/default.conf
+   ```
+4. Test the Nginx configuration and restart the service:
+   ```
+   sudo nginx -t
+   sudo systemctl restart nginx
+   ```
+
+Step 5: Configure the .NET 7 Web API to run as a service
+1. Create a new service file `/etc/systemd/system/yourapp.service` with the following content:
+   ```
+   [Unit]
+   Description=.NET 7 Web API App
+   After=network.target
+
+   [Service]
+   WorkingDirectory=/path/to/webapi/publish/folder
+   ExecStart=/usr/bin/dotnet /path/to/webapi/publish/folder/YourWebAPI.dll
+   Restart=always
+   RestartSec=10
+   SyslogIdentifier=dotnet-yourapp
+   User=www-data
+   Environment=ASPNETCORE_ENVIRONMENT=Production
+   Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   Update the paths to the Web
+
+API "publish" folder accordingly and replace "YourWebAPI.dll" with your Web API DLL file name.
+
+Step 6: Start and enable the .NET 7 Web API service
+1. Reload the systemd daemon to recognize the new service file:
+   ```
+   sudo systemctl daemon-reload
+   ```
+2. Start and enable the .NET 7 Web API service to run on startup:
+   ```
+   sudo systemctl start yourapp.service
+   sudo systemctl enable yourapp.service
+   ```
+
+Step 7: Configure the firewall
+1. If you have a firewall enabled on your RHEL server, you will need to open the required ports for Nginx:
+   ```
+   sudo firewall-cmd --permanent --zone=public --add-service=http
+   sudo firewall-cmd --permanent --zone=public --add-service=https
+   sudo firewall-cmd --reload
+   ```
+
+Step 8: Configure Angular to use the Web API
+1. Update the "environment.prod.ts" file in your Angular project to point to the Web API's URL (e.g., "http://yourdomain.com/api").
+2. Rebuild the Angular application using `ng build --prod` and copy the updated "dist" folder to the configured Nginx root directory.
+
+Your Angular 14 application and .NET 7 Web API should now be hosted on a RHEL server using Nginx. Test your application by navigating to your website's URL. If you encounter any issues, check the Nginx error logs in `/var/log/nginx/` and the .NET Web API logs using `journalctl -u yourapp.service`.
+
+
+
+
+
+
 To host an Angular 14 application and a .NET 7 Web API on IIS 10, you will need to follow these steps:
 
 Step 1: Install IIS and required components
