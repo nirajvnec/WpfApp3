@@ -1,3 +1,33 @@
+using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+public class FakeHttpMessageHandler : HttpMessageHandler
+{
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        HttpResponseMessage response = new(HttpStatusCode.OK)
+        {
+            Content = new StringContent(JsonConvert.SerializeObject(
+                new UserPermission(
+                    "0413.1426.1500.5500.5509.5504", // TechIDValue
+                    "READ ONLY", // RightName
+                    "INDSPA874601", // ScopeValueSet
+                    "LOCATION_RO", // AttributeName
+                    "REPORTS_ALL" // AttributeValue
+                )
+            ))
+        };
+
+        return await Task.FromResult(response);
+    }
+}
+
+
+
+
 public record UserPermission(
     string TechIDValue,
     string RightName,
