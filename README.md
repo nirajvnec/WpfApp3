@@ -11,6 +11,30 @@ public async Task<List<T>> PostPermissionedDataAsync<T>()
     }
     // ...
 
+    if (typeof(T) == typeof(string))
+    {
+        // Extract the AttributeName property values and return them as a list
+        var attributeNames = userPermissions.Select(up => up.AttributeName).ToList();
+        return attributeNames as List<T>;
+    }
+    
+    return userPermissions as List<T>;
+}
+
+
+public async Task<List<T>> PostPermissionedDataAsync<T>()
+{
+    // ...
+    List<UserPermission> userPermissions;
+    string json;
+
+    try
+    {
+        // ...
+        userPermissions = JsonConvert.DeserializeObject<List<UserPermission>>(json) ?? new List<UserPermission>();
+    }
+    // ...
+
     return userPermissions as List<T>;
 }
 
