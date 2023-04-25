@@ -1,4 +1,27 @@
 
+private static IOptions<AppSettings> GetAppSettingsOptions()
+{
+    string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "DEV";
+
+    var configurationBuilder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.unittests.json")
+        .AddJsonFile($"appsettings.unittests.{environmentName}.json", optional: true); // Load environment-specific settings
+
+    var configuration = configurationBuilder.Build();
+
+    var appSettingsSection = configuration.GetSection(environmentName);
+
+    var appSettings = appSettingsSection.Get<AppSettings>();
+    var appSettingsOptions = Options.Create(appSettings);
+
+    return appSettingsOptions;
+}
+
+
+
+
+
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
