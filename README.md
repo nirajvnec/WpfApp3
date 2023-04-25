@@ -1,3 +1,54 @@
+To host an Angular 14 application and a .NET 7 Web API on IIS 10, you will need to follow these steps:
+
+Step 1: Install IIS and required components
+
+Open the "Control Panel" and go to "Programs and Features."
+Click "Turn Windows features on or off."
+Enable "Internet Information Services (IIS)" by ticking the checkbox.
+Expand the IIS node and enable the following features:
+Web Management Tools:
+IIS Management Console
+World Wide Web Services:
+Application Development Features:
+.NET Extensibility 4.8 (or later)
+ASP.NET 4.8 (or later)
+ISAPI Extensions
+ISAPI Filters
+Click "OK" to install the selected features.
+Step 2: Install the .NET Core Hosting Bundle
+
+Download the .NET Core Hosting Bundle for .NET 7 from the official Microsoft website: https://dotnet.microsoft.com/download/dotnet/7.0
+Install the hosting bundle by following the installation wizard.
+Step 3: Publish Angular 14 and .NET 7 Web API projects
+
+Publish your Angular 14 application:
+Open the terminal and navigate to the Angular project directory.
+Run ng build --prod to create a production build in the "dist" folder.
+Publish your .NET 7 Web API application:
+Open the terminal and navigate to the Web API project directory.
+Run dotnet publish --configuration Release --output ./publish to create a release build in the "publish" folder.
+Step 4: Configure IIS
+
+Open IIS Manager and create a new website by right-clicking "Sites" and selecting "Add Website."
+Set the website name, physical path (Angular project's "dist" folder), binding information, and click "OK."
+Create a new application under the website for the Web API by right-clicking the website and selecting "Add Application."
+Set the alias and physical path (Web API project's "publish" folder), then click "OK."
+Step 5: Configure the Web API application
+
+Select the Web API application, and double-click "Authentication" in the Features view.
+Ensure "Anonymous Authentication" is enabled.
+Go back to the Features view and double-click "Handler Mappings."
+Find and select the "aspNetCore" handler, then click "Edit" in the Actions pane.
+In the "Executable" field, enter the path to the .NET 7 runtime (e.g., "C:\Program Files\dotnet\dotnet.exe").
+In the "Arguments" field, enter the path to your published Web API .dll file (e.g., "C:\inetpub\wwwroot\YourWebAPI\YourWebAPI.dll").
+Click "OK" to save the changes.
+Step 6: Configure Angular to use the Web API
+
+Update the "environment.prod.ts" file in your Angular project to point to the Web API's URL (e.g., "https://yourwebsite.com/WebAPI").
+Rebuild the Angular application using ng build --prod and copy the updated "dist" folder to the IIS website's physical path.
+At this point, your Angular 14 application and .NET 7 Web API should be hosted on IIS 10. Test your application by navigating to your website's URL.
+
+
 public async Task<List<string>> GetAttributeNamesAsync()
 {
     List<UserPermission> userPermissions = await PostPermissionedDataAsync<UserPermission>();
