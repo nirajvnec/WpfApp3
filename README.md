@@ -1,4 +1,28 @@
 
+using Newtonsoft.Json;
+using MarsNet.Models.Services;
+
+// ...
+
+string json = "{\"name\":\"value\"}";
+
+// Option 1: Deserialize to a single object
+UserPermission userPermission = JsonConvert.DeserializeObject<UserPermission>(json);
+
+// Option 2: Deserialize to a list, handling the single object case
+List<UserPermission> userPermissions;
+try
+{
+    userPermissions = JsonConvert.DeserializeObject<List<UserPermission>>(json);
+}
+catch (JsonSerializationException)
+{
+    userPermissions = new List<UserPermission> { JsonConvert.DeserializeObject<UserPermission>(json) };
+}
+
+
+
+
 private static IOptions<AppSettings> GetAppSettingsOptions()
 {
     string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "DEV";
