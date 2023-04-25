@@ -1,3 +1,55 @@
+public record UserPermission(
+    string TechIDValue,
+    string RightName,
+    string ScopeValueSet,
+    string AttributeName,
+    string AttributeValue
+);
+
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+// ...
+
+public async Task<List<T>> PostPermissionedDataAsync<T>()
+{
+    var requestData = new
+    {
+        LoginName = "nnkuma152",
+        IctoID = "ICTO-22866"
+    };
+
+    ServicePointManager.Expect100Continue = true;
+    ServicePointManager.DefaultConnectionLimit = 9999;
+    ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+
+    using var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+    HttpResponseMessage response;
+    List<UserPermission> userPermissions;
+    string json;
+
+    try
+    {
+        response = await _httpClient.PostAsync(_appSettings.Voluo.AuraSyncGetPermissionApiEndPoint, content);
+        json = await response.Content.ReadAsStringAsync();
+        userPermissions = JsonConvert.DeserializeObject<List<UserPermission>>(json);
+    }
+    catch (Exception ex)
+    {
+        // Handle exceptions here
+        throw;
+    }
+
+    return userPermissions as List<T>;
+}
+
+
+
+
 
 using Newtonsoft.Json;
 using MarsNet.Models.Services;
