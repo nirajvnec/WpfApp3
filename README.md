@@ -1,3 +1,9 @@
+var response = await controller.GetReportQueues();
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(response);
+        Assert.Equal(200, okResult.StatusCode);
+
 using NSubstitute;
 using System.Collections.Generic;
 using System.Threading.Tasks;
