@@ -1,3 +1,42 @@
+using Xunit;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using NSubstitute;
+// ...
+
+public class ReportRunControllerTests
+{
+    [Fact]
+    public async Task GetReportQueues_ReturnsOkStatus()
+    {
+        // Arrange
+        var mockedAuraSync = Substitute.For<IAuraSync>();
+        var mockedMarsXmlService = Substitute.For<IMarsXmlService>();
+        var mockedAppSettings = Substitute.For<IOptions<AppSettings>>();
+        var mockedUserContext = Substitute.For<IUserContext>();
+
+        var desiredReturnValue = new Dictionary<string, List<string>>
+        {
+            { "Key1", new List<string> { "Value1", "Value2" } },
+            { "Key2", new List<string> { "Value3", "Value4" } }
+        };
+
+        mockedAuraSync.GwattributeValueAsync().Returns(Task.FromResult(desiredReturnValue));
+
+        var controller = new ReportRunController(mockedMarsXmlService, mockedAppSettings, mockedUserContext, mockedAuraSync);
+
+        // Act
+        var response = await controller.GetReportQueues();
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(response);
+        Assert.Equal(200, okResult.StatusCode);
+    }
+}
+
+
+
 var response = await controller.GetReportQueues();
 
         // Assert
