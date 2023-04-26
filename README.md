@@ -1,3 +1,23 @@
+using NSubstitute;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+// ...
+
+// Arrange
+var mockedAuraSync = Substitute.For<IAuraSync>();
+
+// Set up the desired return value for GwattributeValueAsync
+var desiredReturnValue = new Dictionary<string, List<string>>
+{
+    { "Key1", new List<string> { "Value1", "Value2" } },
+    { "Key2", new List<string> { "Value3", "Value4" } }
+};
+
+mockedAuraSync.GwattributeValueAsync().Returns(Task.FromResult(desiredReturnValue));
+
+// Use mockedAuraSync as a parameter when instantiating the class containing the GetReportQueues method
+
+
 api/ReportRun/GetReportQueues
 
 using Xunit;
