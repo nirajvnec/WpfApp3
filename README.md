@@ -1,3 +1,51 @@
+using Xunit;
+using NSubstitute;
+using System.Security.Claims;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
+
+public class WebUserContextTests
+{
+    [Fact]
+    public void TestUserName()
+    {
+        // Arrange
+        var userContext = Substitute.For<IUserContext>();
+        userContext.UserName.Returns("test_username");
+
+        var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
+        httpContextAccessor.HttpContext.User.Identity.Name.Returns("test_username");
+
+        // Act
+        // Use the mocked userContext object in your tests
+        string userName = userContext.UserName;
+
+        // Assert
+        Assert.Equal("test_username", userName);
+    }
+
+    [Fact]
+    public void TestWebUserContextWithMockedAccessor()
+    {
+        // Arrange
+        var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
+
+        var fakeIdentity = new GenericIdentity("domain\\username");
+        var fakePrincipal = new GenericPrincipal(fakeIdentity, null);
+        httpContextAccessor.HttpContext.User.Returns(fakePrincipal);
+
+        var webUserContext = new WebUserContext(httpContextAccessor);
+
+        // Act
+        string userName = webUserContext.UserName;
+
+        // Assert
+        Assert.Equal("username", userName);
+    }
+}
+
+
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
