@@ -3,25 +3,25 @@ public interface IUserContext
     string UserName { get; }
 }
 
-using System;
-using System.Web;
+// Add global usings at the beginning of your file, outside the namespace (if any).
+global using System;
+global using System.Web;
 
 public class WebUserContext : IUserContext
 {
-    public HttpContext Context { get; set; }
+    public HttpContext Context { get; init; }
 
     public string UserName
     {
         get
         {
-            string userName = string.Empty;
-            if (!string.IsNullOrEmpty(Context?.User?.Identity?.Name))
+            if (Context?.User?.Identity?.Name is not null and var tempName)
             {
-                var tempName = Context.User.Identity.Name;
-                Console.WriteLine(userName);
-                userName = tempName.IndexOf("\\") > 0 ? tempName.Substring(tempName.IndexOf("\\") + 1) : tempName;
+                Console.WriteLine(tempName);
+                return tempName.IndexOf("\\") > 0 ? tempName[tempName.IndexOf("\\")..] : tempName;
             }
-            return userName;
+
+            return string.Empty;
         }
     }
 }
