@@ -1,3 +1,51 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContext, WebUserContext>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+// ...
+
+app.Run();
+
+
+
+
+using System;
+using Microsoft.AspNetCore.Http;
+
+public class WebUserContext : IUserContext
+{
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public WebUserContext(IHttpContextAccessor httpContextAccessor)
+    {
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public string UserName
+    {
+        get
+        {
+            HttpContext context = _httpContextAccessor.HttpContext;
+            if (context?.User?.Identity?.Name is not null and var tempName)
+            {
+                Console.WriteLine(tempName);
+                return tempName.IndexOf("\\") > 0 ? tempName[tempName.IndexOf("\\")..] : tempName;
+            }
+
+            return string.Empty;
+        }
+    }
+}
+
+
 public interface IUserContext
 {
     string UserName { get; }
