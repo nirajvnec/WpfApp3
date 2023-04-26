@@ -1,3 +1,35 @@
+public interface IUserContext
+{
+    string UserName { get; }
+}
+
+using System;
+using System.Web;
+
+public class WebUserContext : IUserContext
+{
+    public HttpContext Context { get; set; }
+
+    public string UserName
+    {
+        get
+        {
+            string userName = string.Empty;
+            if (!string.IsNullOrEmpty(Context?.User?.Identity?.Name))
+            {
+                var tempName = Context.User.Identity.Name;
+                Console.WriteLine(userName);
+                userName = tempName.IndexOf("\\") > 0 ? tempName.Substring(tempName.IndexOf("\\") + 1) : tempName;
+            }
+            return userName;
+        }
+    }
+}
+
+
+
+
+
 To host an Angular 14 application and a .NET 7 Web API on a Red Hat Enterprise Linux (RHEL) server using Nginx, follow these steps:
 
 Step 1: Install .NET 7 SDK and Runtime
