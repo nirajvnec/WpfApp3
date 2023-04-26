@@ -1,3 +1,5 @@
+api/ReportRun/GetReportQueues
+
 using Xunit;
 using NSubstitute;
 using System.Security.Claims;
