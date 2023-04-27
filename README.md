@@ -1,3 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public static List<string> ConvertDictionaryKeysToList(Dictionary<string, List<string>> dictionary)
+{
+    List<string> keysList = dictionary.Keys.ToList();
+    return keysList;
+}
+
+
+
+
+
+
+
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
