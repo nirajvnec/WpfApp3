@@ -2,6 +2,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create a sample dictionary
+        Dictionary<string, List<string>> sampleDictionary = new Dictionary<string, List<string>>
+        {
+            {"key1", new List<string> {"value1", "value2"}},
+            {"key2", new List<string> {"value3", "value4"}},
+            {"key3", new List<string> {"value5", "value6"}}
+        };
+
+        // Convert the dictionary keys into a list
+        List<string> keysList = ConvertDictionaryKeysToList(sampleDictionary);
+
+        // Print the list to the console
+        Console.WriteLine("Keys in the list:");
+        foreach (string key in keysList)
+        {
+            Console.WriteLine(key);
+        }
+    }
+
+    public static List<string> ConvertDictionaryKeysToList(Dictionary<string, List<string>> dictionary)
+    {
+        List<string> keysList = dictionary.Keys.ToList();
+        return keysList;
+    }
+}
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 public static List<string> ConvertDictionaryKeysToList(Dictionary<string, List<string>> dictionary)
 {
     List<string> keysList = dictionary.Keys.ToList();
