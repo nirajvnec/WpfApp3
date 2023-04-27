@@ -1,3 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create a sample dictionary
+        Dictionary<string, List<string>> sampleDictionary = new Dictionary<string, List<string>>
+        {
+            {"key1", new List<string> {"value1", "value2"}},
+            {"key2", new List<string> {"value3", "value4"}},
+            {"key3", new List<string> {"value5", "value6"}}
+        };
+
+        // Convert the dictionary values into a single list
+        List<string> valuesList = ConvertDictionaryValuesToList(sampleDictionary);
+
+        // Print the list to the console
+        Console.WriteLine("Values in the list:");
+        foreach (string value in valuesList)
+        {
+            Console.WriteLine(value);
+        }
+    }
+
+    public static List<string> ConvertDictionaryValuesToList(Dictionary<string, List<string>> dictionary)
+    {
+        List<string> valuesList = dictionary.Values.SelectMany(v => v).ToList();
+        return valuesList;
+    }
+}
+
+
+
+
+
 
 public static List<string> ConvertDictionaryValuesToList(Dictionary<string, List<string>> dictionary)
 {
