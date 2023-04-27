@@ -1,3 +1,13 @@
+
+public static List<string> ConvertDictionaryValuesToList(Dictionary<string, List<string>> dictionary)
+{
+    List<string> valuesList = dictionary.Values.SelectMany(v => v).ToList();
+    return valuesList;
+}
+
+
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
