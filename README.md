@@ -1,3 +1,8 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/scss/bootstrap';
+
+
+
 <div class="row mb-3">
   <div class="col-md-6">
     <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions"></app-dropdowns>
