@@ -1,3 +1,30 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent-component',
+  templateUrl: './parent-component.component.html',
+  styleUrls: ['./parent-component.component.scss']
+})
+export class ParentComponent {
+  availableReportQueueOptions = ['Option 1', 'Option 2', 'Option 3'];
+  priorityOptions = ['High', 'Medium', 'Low'];
+}
+
+<app-dropdowns [options]="availableReportQueueOptions"></app-dropdowns>
+<app-dropdowns [options]="priorityOptions"></app-dropdowns>
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-dropdowns',
+  templateUrl: './dropdowns.component.html',
+  styleUrls: ['./dropdowns.component.scss']
+})
+export class DropdownsComponent {
+  @Input() options: string[];
+}
+
+
 <mat-form-field appearance="fill">
   <mat-label>Dropdown</mat-label>
   <mat-select>
