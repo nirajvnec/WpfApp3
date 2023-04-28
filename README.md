@@ -1,4 +1,16 @@
 
+import { MatSelectModule } from '@angular/material/select';
+
+@NgModule({
+  imports: [
+    // Other imports
+    MatSelectModule
+  ],
+  // Other properties
+})
+export class AppModule { }
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
