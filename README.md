@@ -1,3 +1,12 @@
+<mat-form-field appearance="fill">
+  <mat-label>Dropdown</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
 import { Component } from '@angular/core';
 
 @Component({
