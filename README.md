@@ -11,6 +11,31 @@
       </div>
     </div>
     <div class="col-md-6 d-flex justify-content-end align-items-center">
+      <div class="btn-group d-flex align-items-center me-3">
+        <button type="button" class="btn btn-secondary" (click)="form.reset(); inValidReportName = false">Clear</button>
+        <button type="button" class="btn btn-secondary" (click)="deleteSearchCache()">Delete Saved Search</button>
+      </div>
+      <button type="button" class="btn btn-primary ms-auto me-3" (click)="reportControlSearch()" [disabled]="loadSpinnerService.loading$ | async">
+        <span *ngIf="loadSpinnerService.loading$ | async" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        Search
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-md-6" style="width: 360px;">
+      <div class="row">
+        <div class="col-md-6">
+          <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions" class="mt-2"></app-dropdowns>
+        </div>
+        <div class="col-md-6">
+          <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions" class="mt-2"></app-dropdowns>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-end align-items-center">
       <div class="btn-group d-flex align-items-center me-2">
         <button type="button" class="btn btn-secondary" (click)="form.reset(); inValidReportName = false">Clear</button>
         <button type="button" class="btn btn-secondary" (click)="deleteSearchCache()">Delete Saved Search</button>
