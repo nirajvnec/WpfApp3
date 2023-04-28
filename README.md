@@ -5,6 +5,31 @@
   <div class="col-md-6">
     <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions"></app-dropdowns>
   </div>
+  <div class="col-md-2">
+    <span class="spinner-border text-primary me-md-2" role="status" *ngIf="loadSpinnerService.loading$ | async">
+      <span class="sr-only">Loading...</span>
+    </span>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" (click)="form.reset(); inValidReportName = false">Clear</button>
+      <button type="button" class="btn btn-secondary" (click)="deleteSearchCache()">Delete Saved Search</button>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-primary me-md-2" (click)="reportControlSearch()">Search</button>
+  </div>
+</div>
+
+
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions"></app-dropdowns>
+  </div>
+  <div class="col-md-6">
+    <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions"></app-dropdowns>
+  </div>
 </div>
 
 
