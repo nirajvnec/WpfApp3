@@ -1,3 +1,12 @@
+import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
+
+@NgModule({
+  // Other properties
+  schemas: [NO_ERRORS_SCHEMA],
+})
+export class AppModule { }
+
+
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 @NgModule({
