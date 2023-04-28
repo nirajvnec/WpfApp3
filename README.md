@@ -1,4 +1,37 @@
 <div class="container">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-5">
+          <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions" class="mt-2"></app-dropdowns>
+        </div>
+        <div class="col-md-5">
+          <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions" class="mt-2"></app-dropdowns>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" (click)="form.reset(); inValidReportName = false">Clear</button>
+            <button type="button" class="btn btn-secondary" (click)="deleteSearchCache()">Delete Saved Search</button>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+          <button type="button" class="btn btn-primary" (click)="reportControlSearch()" [disabled]="loadSpinnerService.loading$ | async">
+            <span *ngIf="loadSpinnerService.loading$ | async" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
   <div class="row mb-3" style="width: 800px;">
     <div class="col-md-6 d-flex flex-column justify-content-between">
       <div class="row">
