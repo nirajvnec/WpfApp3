@@ -1,3 +1,43 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  styleUrls: ['./my-component.component.scss']
+})
+export class MyComponent {
+  availableReportQueueOptions = ['Option 1', 'Option 2', 'Option 3'];
+  priorityOptions = ['High', 'Medium', 'Low'];
+}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Available Report Queue Options</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let option of availableReportQueueOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Priority Options</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let option of priorityOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
+
+
 import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 
 @NgModule({
