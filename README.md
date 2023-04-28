@@ -6,6 +6,37 @@
           <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions" class="mt-2"></app-dropdowns>
         </div>
         <div class="col-md-5">
+          <div class="d-flex align-items-center" style="width: 140px;">
+            <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions" class="mt-2"></app-dropdowns>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="d-flex align-items-center">
+        <div class="btn-group me-3 d-flex align-items-center" style="width: 170px;">
+          <button type="button" class="btn btn-secondary" (click)="form.reset(); inValidReportName = false">Clear</button>
+          <button type="button" class="btn btn-secondary" (click)="deleteSearchCache()">Delete Saved Search</button>
+        </div>
+        <button type="button" class="btn btn-primary ms-auto" (click)="reportControlSearch()" [disabled]="loadSpinnerService.loading$ | async">
+          <span *ngIf="loadSpinnerService.loading$ | async" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row mb-3" style="width: 800px;">
+    <div class="col-md-6">
+      <div class="row justify-content-between">
+        <div class="col-md-5">
+          <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions" class="mt-2"></app-dropdowns>
+        </div>
+        <div class="col-md-5">
           <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions" class="mt-2"></app-dropdowns>
         </div>
       </div>
