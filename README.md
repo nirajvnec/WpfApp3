@@ -1,3 +1,11 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+
+@NgModule({
+  // Other properties
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule { }
+
 
 import { MatSelectModule } from '@angular/material/select';
 
