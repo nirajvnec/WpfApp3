@@ -1,3 +1,35 @@
+<app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions"></app-dropdowns>
+<app-dropdowns [label]="labelForPriorities" [options]="priorityOptions"></app-dropdowns>
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent-component',
+  templateUrl: './parent-component.component.html',
+  styleUrls: ['./parent-component.component.scss']
+})
+export class ParentComponent {
+  labelForQueues = 'Queue';
+  labelForPriorities = 'Priority';
+
+  availableReportQueueOptions = ['Option 1', 'Option 2', 'Option 3'];
+  priorityOptions = ['High', 'Medium', 'Low'];
+}
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-dropdowns',
+  templateUrl: './dropdowns.component.html',
+  styleUrls: ['./dropdowns.component.scss']
+})
+export class DropdownsComponent {
+  @Input() label: string = 'Dropdown';
+  @Input() options: string[];
+}
+
+
+
 import { Component } from '@angular/core';
 
 @Component({
