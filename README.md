@@ -1,3 +1,14 @@
+<div class="row mb-3">
+  <div class="col-md-6">
+    <app-dropdowns [label]="labelForQueues" [options]="availableReportQueueOptions"></app-dropdowns>
+  </div>
+  <div class="col-md-6">
+    <app-dropdowns [label]="labelForPriorities" [options]="priorityOptions"></app-dropdowns>
+  </div>
+</div>
+
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-6">
